@@ -8,18 +8,26 @@ SCENARIO("strings can be parsed", "[Url]")
 	{
 		WHEN("the string contains an address")
 		{
-			auto host = std::wstring(L"https://user:pass@host:port/path/subpath?query#fragment");
 			THEN("there are fields")
 			{
-				auto url = Url(host);
+				auto str = std::wstring(L"https://user:pass@host:port/path/subpath?query#fragment");
+				auto url = Url(str);
 				CHECK(url.Scheme == L"https");
 				CHECK(url.Authority == L"user:pass@host:port");
 				CHECK(url.Path == L"/path/subpath");
-				CHECK(url.Query == L"query");
+				CHECK(url.Query[0].first == L"query");
 				CHECK(url.Fragment == L"fragment");
 			}
-//			When
-			//queryVal1=10&val2=23
+			WHEN("there is a query")
+			{
+				auto str = std::wstring(L"https://user:pass@host:port/path/subpath?value1=this&value2=\"that\"&\"value3\"=#fragment");
+				THEN("theq query is parsed into arguments")
+				{
+					auto url = Url(str);
+					auto query = url.Query;
+					CHECK(query.size() == 3);
+				}
+			}
 		}
 	}
 }
