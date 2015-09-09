@@ -15,8 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Url.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Url.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)utils.cpp" />
   </ItemGroup>
 </Project>
