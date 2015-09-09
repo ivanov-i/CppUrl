@@ -6,30 +6,20 @@ SCENARIO("strings can be parsed", "[Url]")
 {
 	GIVEN("a string")
 	{
-		WHEN("the string is empty")
-		{
-			auto emptyString = std::wstring();
-			THEN("throws InvalidArgument exception")
-			{
-				CHECK_THROWS_AS(auto url = Url(emptyString), std::invalid_argument);
-			}
-		}
 		WHEN("the string contains an address")
 		{
-			auto host = std::wstring(L"127.0.0.1");
-			THEN("there is a host")
+			auto host = std::wstring(L"https://user:pass@host:port/path/subpath?query#fragment");
+			THEN("there are fields")
 			{
-				CHECK(Url(host).Host == host);
+				auto url = Url(host);
+				CHECK(url.Scheme == L"https");
+				CHECK(url.Authority == L"user:pass@host:port");
+				CHECK(url.Path == L"/path/subpath");
+				CHECK(url.Query == L"query");
+				CHECK(url.Fragment == L"fragment");
 			}
-			WHEN("there is a scheme")
-			{
-				auto scheme = std::wstring(L"http:");
-				THEN("the scheme is present")
-				{
-					auto str = scheme + L"//" + host;
-					CHECK(Url(str).Scheme == scheme);
-				}
-			}
+//			When
+			//queryVal1=10&val2=23
 		}
 	}
 }
