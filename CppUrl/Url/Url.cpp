@@ -4,5 +4,7 @@
 
 Url::Url(std::wstring str)
 {
-	throw std::invalid_argument("zilch");
+	if(str.empty())
+		throw std::invalid_argument("the URL string is empty");
+	Host = str;
 }

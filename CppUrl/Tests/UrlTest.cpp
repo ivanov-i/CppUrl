@@ -14,5 +14,14 @@ SCENARIO("strings can be parsed", "[Url]")
 				REQUIRE_THROWS_AS(auto url = Url(emptyString), std::invalid_argument);
 			}
 		}
+		WHEN("the string contains only IP address")
+		{
+			auto ipAddr = L"127.0.0.1";
+			THEN("there is a host")
+			{
+				auto url = Url(ipAddr);
+				REQUIRE(url.Host == ipAddr);
+			}
+		}
 	}
 }
