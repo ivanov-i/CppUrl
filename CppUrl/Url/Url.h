@@ -6,4 +6,5 @@ class Url
 public:
 	explicit Url(std::wstring str);
 	std::wstring Host;
+	std::wstring Scheme;
 };

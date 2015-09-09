@@ -11,16 +11,24 @@ SCENARIO("strings can be parsed", "[Url]")
 			auto emptyString = std::wstring();
 			THEN("throws InvalidArgument exception")
 			{
-				REQUIRE_THROWS_AS(auto url = Url(emptyString), std::invalid_argument);
+				CHECK_THROWS_AS(auto url = Url(emptyString), std::invalid_argument);
 			}
 		}
-		WHEN("the string contains only IP address")
+		WHEN("the string contains an address")
 		{
-			auto ipAddr = L"127.0.0.1";
+			auto host = std::wstring(L"127.0.0.1");
 			THEN("there is a host")
 			{
-				auto url = Url(ipAddr);
-				REQUIRE(url.Host == ipAddr);
+				CHECK(Url(host).Host == host);
+			}
+			WHEN("there is a scheme")
+			{
+				auto scheme = std::wstring(L"http:");
+				THEN("the scheme is present")
+				{
+					auto str = scheme + L"//" + host;
+					CHECK(Url(str).Scheme == scheme);
+				}
 			}
 		}
 	}
