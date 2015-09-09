@@ -63,18 +63,6 @@ namespace
 	}
 }
 
-void Url::Parse(const std::string& str)
-{
-	const auto r = std::regex("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?");
-	auto results = std::smatch();
-	std::regex_match(str, results, r);
-	Scheme = CommonUtil::UTF8toUCS2(results[2].str());
-	Authority = CommonUtil::UTF8toUCS2(results[4].str());
-	Path = CommonUtil::UTF8toUCS2(results[5].str());
-	Fragment = CommonUtil::UTF8toUCS2(results[9].str());
-	Query = ParseQueryString(results[7].str());
-}
-
 Url::Url()
 {
 
@@ -86,10 +74,10 @@ Url::Url(std::string str)
 }
 
 Url::Url(const std::wstring& scheme,
-		const std::wstring& authority,
-		const std::wstring& path,
-		const std::wstring& fragment,
-		const std::vector<std::pair<std::wstring, std::wstring>>& query)
+	const std::wstring& authority,
+	const std::wstring& path,
+	const std::wstring& fragment,
+	const std::vector<std::pair<std::wstring, std::wstring>>& query)
 	: Scheme{ scheme },
 	Authority{ authority },
 	Path{ path },
@@ -97,6 +85,18 @@ Url::Url(const std::wstring& scheme,
 	Query{ query }
 {
 
+}
+
+void Url::Parse(const std::string& str)
+{
+	const auto r = std::regex("^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?");
+	auto results = std::smatch();
+	std::regex_match(str, results, r);
+	Scheme = CommonUtil::UTF8toUCS2(results[2].str());
+	Authority = CommonUtil::UTF8toUCS2(results[4].str());
+	Path = CommonUtil::UTF8toUCS2(results[5].str());
+	Fragment = CommonUtil::UTF8toUCS2(results[9].str());
+	Query = ParseQueryString(results[7].str());
 }
 
 std::string Url::Compile() const

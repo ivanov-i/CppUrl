@@ -79,8 +79,8 @@ SCENARIO("URL can be compiled", "[Url]")
 
 			THEN("quotes are not encoded")
 			{
-				auto url = Url(L"http", L"localhost", L"/pa th/sub\"path", L"frag me\"nt", args);
-				CHECK(url.Compile() == "http://localhost/pa%20th/sub%22path?\"na%20me\"=\"va%22lu%20e\"#frag%20me%22nt");
+				auto url = Url(L"", L"", L"", L"", args);
+				CHECK(url.Compile() == "?\"na%20me\"=\"va%22lu%20e\"");
 			}
 		}
 	}
